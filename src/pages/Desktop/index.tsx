@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import si from 'systeminformation';
+import child_process from 'child_process';
 import WindowsBackground from '../../assets/background.jpg';
 import diskIcon from '../../assets/disk.ico';
 import folderIcon from '../../assets/folder.ico';
@@ -146,9 +147,20 @@ const Desktop = () => {
   };
 
   const openTerminal = () => {
-    const terminal = 'x-terminal-emulator';
-    const { spawn } = require('child_process');
-    spawn(terminal);
+    if (process.platform === 'linux') {
+      const { exec } = child_process;
+      exec('gnome-terminal --working-directory=$HOME');
+    }
+
+    if (process.platform === 'win32') {
+      const { exec } = child_process;
+      exec('start cmd.exe');
+    }
+
+    if (process.platform === 'darwin') {
+      const { exec } = child_process;
+      exec('open -a Terminal');
+    }
   };
 
   useEffect(() => {
