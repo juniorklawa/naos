@@ -11,15 +11,16 @@
 </p>
 # Funcionalidades
 
- - [ ] Sistema
+ - [X] Sistema
  - [ ] Processos
- - [ ] Memória
+ - [X] Memória
  - [ ] Terminal
  - [ ] Arquivos
 
 ## Outros
  - [ ] Apenas uma janela por id aberta, se ja estiver aberta focar nela
  - [ ] Botão iniciar
+ - [ ] Imagem nas seções
 
 ## License
 

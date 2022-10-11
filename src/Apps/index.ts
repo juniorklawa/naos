@@ -1,5 +1,11 @@
 import System from './System';
+import Memory from './Memory';
+import diskIcon from '../assets/disk.ico';
+import folderIcon from '../assets/folder.ico';
 import computerIcon from '../assets/my-computer.ico';
+import terminalIcon from '../assets/terminal.ico';
+import threadsIcon from '../assets/threads.ico';
+import Processes from './Processes';
 
 const gen = () => {
   let id = -1;
@@ -32,10 +38,10 @@ export const defaultAppState = [
     zIndex: genIndex(),
   },
   {
-    component: System,
+    component: Processes,
     header: {
       title: 'Processos',
-      icon: computerIcon,
+      icon: threadsIcon,
     },
     defaultSize: {
       width: 660,
@@ -52,10 +58,10 @@ export const defaultAppState = [
     zIndex: genIndex(),
   },
   {
-    component: System,
+    component: Memory,
     header: {
       title: 'Memória',
-      icon: computerIcon,
+      icon: diskIcon,
     },
     defaultSize: {
       width: 660,
@@ -75,7 +81,7 @@ export const defaultAppState = [
     component: System,
     header: {
       title: 'Terminal',
-      icon: computerIcon,
+      icon: terminalIcon,
     },
     defaultSize: {
       width: 660,
@@ -95,7 +101,7 @@ export const defaultAppState = [
     component: System,
     header: {
       title: 'Arquivos',
-      icon: computerIcon,
+      icon: folderIcon,
     },
     defaultSize: {
       width: 660,
@@ -112,5 +118,3 @@ export const defaultAppState = [
     zIndex: genIndex(),
   },
 ];
-
-export { System };

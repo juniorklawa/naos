@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import si from 'systeminformation';
 import { Container } from './styles';
 
-const System = () => {
+const Processes = () => {
   const [info, setInfo] = useState(null);
 
   const getInfo = async () => {
     const cpuData = await si.cpu();
     const osData = await si.osInfo();
     const graphicsData = await si.graphics();
+
+    si.processes().then((data) => console.log(data));
+
     setInfo({
       cpu: cpuData,
       os: osData,
@@ -26,7 +29,6 @@ const System = () => {
         <div className="com__content__inner">
           <div className="com__content__right">
             <div className="com__content__right__card">
-              <div style={{ height: 16 }} />
               <div
                 style={{
                   fontSize: 16,
@@ -165,4 +167,4 @@ const System = () => {
   );
 };
 
-export default System;
+export default Processes;
