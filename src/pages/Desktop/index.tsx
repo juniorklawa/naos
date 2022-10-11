@@ -1,18 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import si from 'systeminformation';
 import WindowsBackground from '../../assets/background.jpg';
-import DesktopIcon from '../../components/DesktopIcon';
-import computerIcon from '../../assets/my-computer.ico';
 import diskIcon from '../../assets/disk.ico';
-import threadsIcon from '../../assets/threads.ico';
-import terminalIcon from '../../assets/terminal.ico';
 import folderIcon from '../../assets/folder.ico';
-import { Container } from './styles';
+import computerIcon from '../../assets/my-computer.ico';
+import terminalIcon from '../../assets/terminal.ico';
+import threadsIcon from '../../assets/threads.ico';
+import DesktopIcon from '../../components/DesktopIcon';
 import Windows from '../../components/Window';
-import { defaultAppState } from '../../Features';
+import { defaultAppState } from '../../Apps';
+import { Container } from './styles';
 
-const HomePage = () => {
+export interface IApp {
+  component: ReactNode;
+  header: {
+    title: string;
+    icon: string;
+  };
+  defaultSize: {
+    width: number;
+    height: number;
+  };
+  defaultOffset: {
+    x: number;
+    y: number;
+  };
+  resizable: boolean;
+  minimized: boolean;
+  maximized: boolean;
+  id: number;
+  zIndex: number;
+}
+
+interface IAppState {
+  apps: IApp[];
+  nextZIndex: number;
+}
+
+const initState: IAppState = {
+  apps: [],
+  nextZIndex: defaultAppState.length,
+};
+
+const Desktop = () => {
   const [selectedIcon, setSelectedIcon] = useState('');
+  const [naOSState, setNaOSState] = useState(initState);
 
   const iconsData = [
     {
@@ -56,12 +88,63 @@ const HomePage = () => {
 
     setTime(formattedTime);
   };
+  function getFocusedAppId() {
+    const focusedApp = [...naOSState.apps]
+      .sort((a, b) => b.zIndex - a.zIndex)
+      .find((app) => !app.minimized);
+    return focusedApp ? focusedApp.id : -1;
+  }
 
-  const onMaximizeWindow = () => {};
-  const onMinimizeWindow = () => {};
-  const onFocusApp = () => {};
-  const onCloseApp = () => {};
-  // run getTime function every second
+  const focusedAppId = getFocusedAppId();
+
+  const onMaximizeWindow = (id: number) => {
+    if (id === focusedAppId) {
+      setNaOSState({
+        ...naOSState,
+        apps: naOSState.apps.map((app) =>
+          app.id === id ? { ...app, maximized: !app.maximized } : app
+        ),
+      });
+    }
+  };
+  const onMinimizeWindow = (id: number) => {
+    if (id === focusedAppId) {
+      setNaOSState({
+        ...naOSState,
+        apps: naOSState.apps.map((app) =>
+          app.id === id ? { ...app, minimized: !app.minimized } : app
+        ),
+      });
+    }
+  };
+  const onFocusApp = (id: number) => {
+    setNaOSState({
+      ...naOSState,
+      nextZIndex: naOSState.nextZIndex + 1,
+      apps: naOSState.apps.map((app) => {
+        if (app.id === id) {
+          return { ...app, zIndex: naOSState.nextZIndex };
+        }
+        return app;
+      }),
+    });
+  };
+
+  const onCloseApp = (id: number) => {
+    setNaOSState({
+      ...naOSState,
+      apps: naOSState.apps.filter((app) => app.id !== id),
+    });
+  };
+
+  const onAddApp = (id: number) => {
+    setNaOSState({
+      ...naOSState,
+      nextZIndex: naOSState.nextZIndex + 1,
+      apps: [...naOSState.apps, defaultAppState.find((app) => app.id === id)],
+    });
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       getTime();
@@ -92,6 +175,7 @@ const HomePage = () => {
           }}
         >
           <DesktopIcon
+            onClick={() => onAddApp(0)}
             selectedIcon={selectedIcon}
             setSelectedIcon={setSelectedIcon}
             icon={iconsData[0].icon}
@@ -99,6 +183,7 @@ const HomePage = () => {
           />
 
           <DesktopIcon
+            onClick={() => onAddApp(1)}
             selectedIcon={selectedIcon}
             setSelectedIcon={setSelectedIcon}
             icon={iconsData[1].icon}
@@ -116,6 +201,7 @@ const HomePage = () => {
           }}
         >
           <DesktopIcon
+            onClick={() => onAddApp(2)}
             selectedIcon={selectedIcon}
             setSelectedIcon={setSelectedIcon}
             icon={iconsData[2].icon}
@@ -123,6 +209,7 @@ const HomePage = () => {
           />
 
           <DesktopIcon
+            onClick={() => onAddApp(3)}
             selectedIcon={selectedIcon}
             setSelectedIcon={setSelectedIcon}
             icon={iconsData[3].icon}
@@ -140,6 +227,7 @@ const HomePage = () => {
           }}
         >
           <DesktopIcon
+            onClick={() => onAddApp(4)}
             selectedIcon={selectedIcon}
             setSelectedIcon={setSelectedIcon}
             icon={iconsData[4].icon}
@@ -149,12 +237,12 @@ const HomePage = () => {
       </div>
 
       <Windows
-        apps={[...defaultAppState]}
+        apps={naOSState.apps}
         onMouseDown={onFocusApp}
         onClose={onCloseApp}
         onMinimize={onMinimizeWindow}
         onMaximize={onMaximizeWindow}
-        focusedAppId={0}
+        focusedAppId={focusedAppId}
       />
 
       <footer
@@ -217,4 +305,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Desktop;

@@ -11,16 +11,10 @@ function HeaderButtons({
   className,
 }) {
   const buttonElements = {
-    minimize: (
-      <button
-        key="minimize"
-        className="header__button header__button--minimize"
-        onMouseUp={onMinimize}
-      />
-    ),
     maximize: (
       <button
         key="maximize"
+        type="button"
         className={`header__button ${
           maximized ? 'header__button--maximized' : 'header__button--maximize'
         } ${resizable ? '' : 'header__button--disable'}`}
@@ -42,7 +36,6 @@ function HeaderButtons({
         buttons.map((b) => buttonElements[b])
       ) : (
         <>
-          {buttonElements.minimize}
           {buttonElements.maximize}
           {buttonElements.close}
         </>

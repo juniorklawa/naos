@@ -5,6 +5,7 @@ interface DesktopIconProps {
   icon: string;
   selectedIcon: string;
   setSelectedIcon: (icon: string) => void;
+  onClick: () => void;
 }
 
 const DesktopIcon = ({
@@ -12,6 +13,7 @@ const DesktopIcon = ({
   icon,
   selectedIcon,
   setSelectedIcon,
+  onClick,
 }: DesktopIconProps) => {
   const [clickedCount, setClickedCount] = useState(0);
 
@@ -25,7 +27,7 @@ const DesktopIcon = ({
       onClick={handleOnClick}
       onDoubleClick={() => {
         // alert
-        alert(`You double clicked ${label}!`);
+        onClick();
       }}
       type="button"
       style={{

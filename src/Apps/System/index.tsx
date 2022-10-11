@@ -4,116 +4,8 @@ import styled from 'styled-components';
 function System({ onClose }) {
   return (
     <Div>
-      <section className="com__toolbar">
-        <div className="com__options" />
-      </section>
-      <section className="com__function_bar">
-        <div className="com__function_bar__button--disable">
-          <span className="com__function_bar__text">Back</span>
-          <div className="com__function_bar__arrow" />
-        </div>
-        <div className="com__function_bar__button--disable">
-          <div className="com__function_bar__arrow" />
-        </div>
-        <div className="com__function_bar__button" />
-        <div className="com__function_bar__separate" />
-        <div className="com__function_bar__button">
-          <span className="com__function_bar__text">Search</span>
-        </div>
-        <div className="com__function_bar__button">
-          <span className="com__function_bar__text">Folders</span>
-        </div>
-        <div className="com__function_bar__separate" />
-        <div className="com__function_bar__button">
-          <div className="com__function_bar__arrow" />
-        </div>
-      </section>
-      <section className="com__address_bar">
-        <div className="com__address_bar__title">Address</div>
-        <div className="com__address_bar__content">
-          <div className="com__address_bar__content__text">My Computer</div>
-        </div>
-        <div className="com__address_bar__go">
-          <span className="com__address_bar__go__text">Go</span>
-        </div>
-      </section>
       <div className="com__content">
         <div className="com__content__inner">
-          <div className="com__content__left">
-            <div className="com__content__left__card">
-              <div className="com__content__left__card__header">
-                <div className="com__content__left__card__header__text">
-                  System Tasks
-                </div>
-              </div>
-              <div className="com__content__left__card__content">
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    View system information
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    Add or remove programs
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    Change a setting
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="com__content__left__card">
-              <div className="com__content__left__card__header">
-                <div className="com__content__left__card__header__text">
-                  Other Places
-                </div>
-              </div>
-              <div className="com__content__left__card__content">
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    My Network Places
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    My Documents
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    Shared Documents
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <div className="com__content__left__card__text link">
-                    Control Panel
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="com__content__left__card">
-              <div className="com__content__left__card__header">
-                <div className="com__content__left__card__header__text">
-                  Details
-                </div>
-              </div>
-              <div className="com__content__left__card__content">
-                <div className="com__content__left__card__row">
-                  <iframe
-                    title="ghbtn"
-                    style={{ margin: '0 0 3px -1px', height: '30px' }}
-                    src="https://ghbtns.com/github-btn.html?user=ShizukuIchi&repo=winXP&type=star&count=true&size=large"
-                    frameBorder="0"
-                    scrolling="0"
-                    width="170px"
-                    height="20px"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="com__content__right">
             <div className="com__content__right__card">
               <div className="com__content__right__card__header">
@@ -162,12 +54,6 @@ function System({ onClose }) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="com__content__right__card com__content__right__card--me">
-              <div className="com__content__right__card__header">
-                About Me :)
-              </div>
-              <div className="com__content__right__card__content" />
             </div>
           </div>
         </div>

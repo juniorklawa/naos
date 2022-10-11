@@ -9,3 +9,19 @@
 </a>
   </p>
 </p>
+# Funcionalidades
+
+ - [ ] Sistema
+ - [ ] Processos
+ - [ ] Memória
+ - [ ] Terminal
+ - [ ] Arquivos
+
+## Outros
+ - [ ] Apenas uma janela por id aberta, se ja estiver aberta focar nela
+ - [ ] Botão iniciar
+
+## License
+
+The Windows XP name, artwork, trademark are surely property of Microsoft. This project is provided for educational purposes only. It is not affiliated with and has not been approved by Microsoft.
+
