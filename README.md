@@ -11,10 +11,10 @@
 </p>
 # Funcionalidades
 
-- [x] Sistema
-- [ ] Processos
-- [x] Memória
-- [x] Terminal
+- [X] Sistema
+- [X] Processos
+- [X] Memória
+- [X] Terminal
 - [ ] Arquivos
 
 ## Outros
