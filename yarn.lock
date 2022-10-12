@@ -1107,6 +1107,14 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cloudcmd/create-element@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@cloudcmd/create-element/-/create-element-2.0.2.tgz#071b26cafafe4a79cdd056d05dee4bb6ac1a2271"
+  integrity sha512-5b74qCgwEUx+GxzXC9Gwamgh4Rx5ouLSrCW+QbaBHWpxA5s1sw5i6MbSODfuts1MSX5RoaZjJAjNY5y3et1iXw==
+  dependencies:
+    currify "^4.0.0"
+    fullstore "^3.0.0"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -4250,6 +4258,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+currify@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/currify/-/currify-4.0.0.tgz#54637df9a9752de8a0d59efbfb5ce59384a1e306"
+  integrity sha512-ABfH28PWp5oqqp31cLXJQdeMqoFNej9rJOu84wKhN3jPCH7FAZg3zY1MVI27PTFoqfPlxOyhGmh9PzOVv+yN2g==
+
 damerau-levenshtein@^1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.7.tgz#64368003512a1a6992593741a09a9d31a836f55d"
@@ -4783,6 +4796,11 @@ electron-notarize@^1.0.0:
   dependencies:
     debug "^4.1.1"
     fs-extra "^9.0.1"
+
+electron-prompt@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/electron-prompt/-/electron-prompt-1.7.0.tgz#6f9dedb2dac1dd6bad2e6592ab81cb87c37f2a35"
+  integrity sha512-IfqJYEgcRO6NuyPROo8AtdkAiZ6N9I1lQEf4dJAkPuhV5YgOHdmLqZJf6OXumZJfzrjpzCM5jHeYOrhGdgbnEA==
 
 electron-publish@22.10.5:
   version "22.10.5"
@@ -5906,6 +5924,11 @@ fsevents@^2.1.2:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.2.1.tgz#1fb02ded2036a8ac288d507a65962bd87b97628d"
   integrity sha512-bTLYHSeC0UH/EFXS9KqWnXuOl/wHK5Z/d+ghd5AsFMYN7wIGkUCOJyzy88+wJKkZPGON8u4Z9f6U4FdgURE9qA==
+
+fullstore@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/fullstore/-/fullstore-3.0.0.tgz#680d5fe282c5f51f67900dbad3fd53e62c954770"
+  integrity sha512-EEIdG+HWpyygWRwSLIZy+x4u0xtghjHNfhQb0mI5825Mmjq6oFESFUY0hoZigEgd3KH8GX+ZOCK9wgmOiS7VBQ==
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -11109,6 +11132,15 @@ slice-ansi@^4.0.0:
     ansi-styles "^4.0.0"
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
+
+smalltalk@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/smalltalk/-/smalltalk-4.1.1.tgz#5c2363525d899743ad7ef40b6c41292d2073c2a2"
+  integrity sha512-zpYWgZ6CNCdVAiXPn0SiYF12LHcEgelJqx32VcPHR5kbLP+khEQIPqyZSTIWxOSCzy1+/cLU35MhmuxCfc/sKg==
+  dependencies:
+    "@cloudcmd/create-element" "^2.0.0"
+    currify "^4.0.0"
+    fullstore "^3.0.0"
 
 smart-buffer@^4.0.2:
   version "4.1.0"
