@@ -6,6 +6,7 @@ import computerIcon from '../assets/my-computer.ico';
 import terminalIcon from '../assets/terminal.ico';
 import threadsIcon from '../assets/threads.ico';
 import Processes from './Processes';
+import Files from './Files';
 
 const gen = () => {
   let id = -1;
@@ -98,7 +99,7 @@ export const defaultAppState = [
     zIndex: genIndex(),
   },
   {
-    component: System,
+    component: Files,
     header: {
       title: 'Arquivos',
       icon: folderIcon,
