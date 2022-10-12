@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import child_process from 'child_process';
 import go from '../../assets/windowsIcons/290.png';
 import newFile from '../../assets/8.ico';
 import folderOpen from '../../assets/23.ico';
@@ -99,6 +100,34 @@ const Files = () => {
     // refresh the list
   };
 
+  const openFile = (filePath: string) => {
+    if (process.platform === 'linux') {
+      const { exec } = child_process;
+      // print error
+      exec(`xdg-open ${filePath}`, (error, stdout, stderr) => {
+        if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          console.log(`stderr: ${stderr}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+      });
+    }
+
+    if (process.platform === 'win32') {
+      const { exec } = child_process;
+      exec(`start ${filePath}`);
+    }
+
+    if (process.platform === 'darwin') {
+      const { exec } = child_process;
+      exec(`open ${filePath}`);
+    }
+  };
+
   useEffect(() => {
     getInfo();
   }, []);
@@ -153,11 +182,14 @@ const Files = () => {
                   onDoubleClick={() => {
                     if (file.isDirectory) {
                       getInfo(file.path);
+                      return;
                     }
+
+                    openFile(file.path);
                   }}
                   key={file?.path}
                   style={{
-                    cursor: file.isDirectory ? 'pointer' : 'default',
+                    cursor: 'pointer',
                     filter:
                       selectedIcon === file?.path
                         ? 'drop-shadow(blue 0px 0px)'
