@@ -14,6 +14,10 @@ const Files = () => {
   const [info, setInfo] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('');
+  const [name, setName] = useState('');
+  const [selectedCreate, setSelectedCreate] = useState<'file' | 'directory'>(
+    'file'
+  );
 
   const getFileIcon = (file: any) => {
     if (file.isDirectory) {
@@ -94,10 +98,39 @@ const Files = () => {
   };
 
   const createNewFile = () => {
-    setIsModalActive(true);
-    // open a prompt to create a new file
-    // create a new file in the current directory
-    // refresh the list
+    if (!name) {
+      return;
+    }
+
+    const { currentDirectoryPath } = info;
+
+    const filePath = path.join(currentDirectoryPath, name);
+
+    fs.writeFileSync(filePath, '');
+
+    getInfo(currentDirectoryPath);
+
+    setName('');
+
+    setIsModalActive(false);
+  };
+
+  const createNewFolder = () => {
+    if (!name) {
+      return;
+    }
+
+    const { currentDirectoryPath } = info;
+
+    const dirPath = path.join(currentDirectoryPath, name);
+
+    fs.mkdirSync(dirPath);
+
+    getInfo(currentDirectoryPath);
+
+    setName('');
+
+    setIsModalActive(false);
   };
 
   const openFile = (filePath: string) => {
@@ -140,7 +173,13 @@ const Files = () => {
           <span className="com__function_bar__text">Back</span>
         </div>
         <div className="com__function_bar__separate" />
-        <div onClick={createNewFile} className="com__function_bar__button">
+        <div
+          onClick={() => {
+            setSelectedCreate('file');
+            setIsModalActive(true);
+          }}
+          className="com__function_bar__button"
+        >
           <img
             className="com__function_bar__icon--normalize "
             src={newFile}
@@ -149,7 +188,13 @@ const Files = () => {
           <span className="com__function_bar__text">Novo Arquivo</span>
         </div>
         <div className="com__function_bar__separate" />
-        <div className="com__function_bar__button">
+        <div
+          onClick={() => {
+            setSelectedCreate('directory');
+            setIsModalActive(true);
+          }}
+          className="com__function_bar__button"
+        >
           <img
             className="com__function_bar__icon--normalize"
             src={folderOpen}
@@ -245,12 +290,9 @@ const Files = () => {
           <div
             style={{
               backgroundColor: 'white',
-              width: '400px',
-              height: '200px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              padding: '16px',
             }}
           >
             <div
@@ -264,25 +306,27 @@ const Files = () => {
             >
               <div
                 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
-                  marginLeft: '20px',
+                  fontFamily: 'Tahoma, Geneva, sans-serif',
                 }}
               >
-                Criar novo arquivo
+                {selectedCreate === 'file' ? 'Novo Arquivo' : 'Nova Pasta'}
               </div>
               <div
                 onClick={() => setIsModalActive(false)}
                 style={{
                   width: '20px',
                   height: '20px',
-                  backgroundColor: 'red',
+                  marginLeft: '8px',
+                  backgroundColor: '#D32F2F',
+                  color: '#ffffff',
                   borderRadius: '50%',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  fontFamily: 'Tahoma, Geneva, sans-serif',
                   cursor: 'pointer',
-                  marginRight: '20px',
                 }}
               >
                 X
@@ -290,21 +334,42 @@ const Files = () => {
             </div>
             <div className="com__modal__content__body">
               <div className="com__modal__content__body__input">
-                <div className="com__modal__content__body__input__title">
-                  Nome do arquivo
+                <div
+                  style={{
+                    fontFamily: 'Tahoma, Geneva, sans-serif',
+                    marginTop: '8px',
+                  }}
+                >
+                  {selectedCreate === 'file'
+                    ? 'Nome do Arquivo'
+                    : 'Nome da Pasta'}
                 </div>
                 <input
                   className="com__modal__content__body__input__input"
                   type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
 
             <button
-              onClick={() => setIsModalActive(false)}
+              type="button"
+              onClick={() => {
+                if (selectedCreate === 'file') {
+                  createNewFile();
+                  return;
+                }
+
+                createNewFolder();
+              }}
               style={{
-                width: '100px',
-                height: '40px',
+                marginTop: '8px',
+                padding: '8px',
+                backgroundColor: '#3F51B5',
+                color: '#ffffff',
+                fontWeight: 'bold',
+                fontFamily: 'Tahoma, Geneva, sans-serif',
                 borderRadius: '5px',
                 cursor: 'pointer',
               }}
