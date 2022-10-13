@@ -2,7 +2,7 @@
   "name": "naos",
   "productName": "naOS",
   "description": "Not An Operational System",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./main.prod.js",
   "author": {
     "name": "Everaldo Junior",
