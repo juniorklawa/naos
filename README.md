@@ -17,13 +17,13 @@
 - [X] Processos
 - [X] Memória
 - [X] Terminal
-- [ ] Arquivos
+- [X] Arquivos
 
 ## Outros
 
-- [ ] Apenas uma janela por id aberta, se ja estiver aberta focar nela
-- [ ] Botão iniciar
-- [ ] Imagem nas seções
+- [X] Apenas uma janela por id aberta, se ja estiver aberta focar nela
+- [X] Botão iniciar
+- [X] Imagem nas seções
 
 ## License
 
