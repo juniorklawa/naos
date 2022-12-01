@@ -2,6 +2,8 @@
 <br />
 <p align="center">
 
+<img src="https://i.imgur.com/yeGtkJa.png" alt="logo" style="height: 100px; width:100px;"/>
+
   <h2 align="center">naOS</h2>
 
   <p align="center">
