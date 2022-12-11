@@ -44,6 +44,13 @@ const Memory = () => {
     getInfo();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getInfo();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Container>
       <div className="com__content">

@@ -4,10 +4,12 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import child_process from 'child_process';
+import si from 'systeminformation';
 import go from '../../assets/windowsIcons/290.png';
 import newFile from '../../assets/8.ico';
 import folderOpen from '../../assets/23.ico';
 import back from '../../assets/windowsIcons/back.png';
+
 import { Container } from './styles';
 
 const Files = () => {
@@ -161,8 +163,40 @@ const Files = () => {
     }
   };
 
+  const [time, setTime] = useState('');
+
+  const getTime = () => {
+    const ms = si.time().current;
+
+    const date = new Date(ms);
+
+    const hours = date.getHours();
+    const seconds = date.getSeconds();
+
+    const secondsString = seconds < 10 ? `0${seconds}` : seconds;
+
+    const hoursString = hours < 10 ? `0${hours}` : hours;
+
+    const minutes = date.getMinutes();
+    const minutesString = minutes < 10 ? `0${minutes}` : minutes;
+
+    const period = hours < 12 ? 'AM' : 'PM';
+
+    const formattedTime = `${hoursString}:${minutesString}:${secondsString} ${period}`;
+
+    setTime(formattedTime);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getTime();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     getInfo();
+    getTime();
   }, []);
 
   return (
@@ -203,6 +237,11 @@ const Files = () => {
           <span className="com__function_bar__text">Nova Pasta</span>
         </div>
         <div className="com__function_bar__separate" />
+        <div className="com__function_bar__button">
+          <span style={{ marginLeft: 4 }} className="com__function_bar__text">
+            {time}
+          </span>
+        </div>
       </section>
 
       <section className="com__address_bar">

@@ -20,6 +20,39 @@ const System = () => {
     getInfo();
   }, []);
 
+  const [time, setTime] = useState('');
+
+  const getTime = () => {
+    const ms = si.time().current;
+
+    const date = new Date(ms);
+
+    const hours = date.getHours();
+    const seconds = date.getSeconds();
+
+    const secondsString = seconds < 10 ? `0${seconds}` : seconds;
+
+    const hoursString = hours < 10 ? `0${hours}` : hours;
+
+    const minutes = date.getMinutes();
+    const minutesString = minutes < 10 ? `0${minutes}` : minutes;
+
+    const period = hours < 12 ? 'AM' : 'PM';
+
+    const formattedTime = `${hoursString}:${minutesString}:${secondsString} ${period}`;
+
+    setTime(formattedTime);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getTime();
+      getInfo();
+      console.log('teste');
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Container>
       <div className="com__content">
@@ -33,7 +66,7 @@ const System = () => {
                 }}
                 className="com__content__right__card__header"
               >
-                Informações sobre o Sistema Operacional
+                Informações sobre o Sistema Operacional {time}
               </div>
               <div className="com__content__right__card__content">
                 <div className="com__content__right__card__item">
