@@ -2,6 +2,8 @@
 <br />
 <p align="center">
 
+<img src="https://i.imgur.com/yeGtkJa.png" alt="logo" style="height: 100px; width:100px;"/>
+
   <h2 align="center">naOS</h2>
 
   <p align="center">
@@ -15,13 +17,13 @@
 - [X] Processos
 - [X] Memória
 - [X] Terminal
-- [ ] Arquivos
+- [X] Arquivos
 
 ## Outros
 
-- [ ] Apenas uma janela por id aberta, se ja estiver aberta focar nela
-- [ ] Botão iniciar
-- [ ] Imagem nas seções
+- [X] Apenas uma janela por id aberta, se ja estiver aberta focar nela
+- [X] Botão iniciar
+- [X] Imagem nas seções
 
 ## License
 
