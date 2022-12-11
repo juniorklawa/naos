@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import si from 'systeminformation';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import { Container } from './styles';
 
 const Memory = () => {
@@ -13,11 +22,6 @@ const Memory = () => {
 
     const diskData = await si.diskLayout();
     const memData = await si.mem();
-
-    console.log({
-      diskData,
-      memData,
-    });
 
     setInfo({
       cpu: cpuData,
@@ -44,12 +48,60 @@ const Memory = () => {
     getInfo();
   }, []);
 
+  const [chartData, setChardData] = useState<any>([]);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      getInfo();
+    const interval = setInterval(async () => {
+      const cpuData = await si.cpu();
+      const osData = await si.osInfo();
+      const graphicsData = await si.graphics();
+
+      const diskData = await si.diskLayout();
+      const memData = await si.mem();
+
+      const datInfo = {
+        cpu: cpuData,
+        os: osData,
+        graphics: graphicsData,
+        disk: diskData,
+        mem: memData,
+      };
+
+      console.log(memData);
+
+      setInfo(datInfo);
+
+      // kb to mb
+
+      const newData = {
+        name: '',
+        active: (memData.active / 1024 / 1024).toFixed(4),
+        available: (memData.available / 1024 / 1024).toFixed(4),
+        free: (memData.free / 1024 / 1024).toFixed(4),
+        used: (memData.used / 1024 / 1024).toFixed(4),
+        cached: (memData.cached / 1024 / 1024).toFixed(4),
+      };
+
+      const updatedData = [
+        ...chartData.map((i: any) => ({
+          ...i,
+          name: '',
+        })),
+        newData,
+      ];
+
+      // only keep the last 5 data points
+      updatedData.splice(0, updatedData.length - 5);
+
+      // the last data point is the current time
+      updatedData[
+        updatedData.length - 1
+      ].name = new Date().toLocaleTimeString();
+
+      setChardData(updatedData);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [chartData]);
 
   return (
     <Container>
@@ -167,6 +219,74 @@ const Memory = () => {
                     Swap Livre: {convertBytes(info?.mem?.swapfree)}
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="com__content__right__card">
+              <div
+                style={{
+                  fontSize: 16,
+                }}
+                className="com__content__right__card__header"
+              >
+                Monitor
+              </div>
+              <div className="com__content__right__card__content">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={chartData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="active"
+                    name="Memória ativa (MB)"
+                    stroke="#8884d8"
+                    activeDot={{ r: 8 }}
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="available"
+                    name="Memória disponível (MB)"
+                    stroke="#82ca9d"
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="free"
+                    name="Memória livre (MB)"
+                    stroke="#1A237E"
+                  />
+
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="used"
+                    name="Memória usada (MB)"
+                    stroke="#AD1457"
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="cached"
+                    name="Memória em cache (MB)"
+                    stroke="#4E342E"
+                  />
+                </LineChart>
               </div>
             </div>
           </div>

@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import si from 'systeminformation';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import { Container } from './styles';
 
 const System = () => {
@@ -9,11 +18,14 @@ const System = () => {
     const cpuData = await si.cpu();
     const osData = await si.osInfo();
     const graphicsData = await si.graphics();
-    setInfo({
+
+    const datInfo = {
       cpu: cpuData,
       os: osData,
       graphics: graphicsData,
-    });
+    };
+
+    setInfo(datInfo);
   };
 
   useEffect(() => {
@@ -22,36 +34,50 @@ const System = () => {
 
   const [time, setTime] = useState('');
 
-  const getTime = () => {
-    const ms = si.time().current;
-
-    const date = new Date(ms);
-
-    const hours = date.getHours();
-    const seconds = date.getSeconds();
-
-    const secondsString = seconds < 10 ? `0${seconds}` : seconds;
-
-    const hoursString = hours < 10 ? `0${hours}` : hours;
-
-    const minutes = date.getMinutes();
-    const minutesString = minutes < 10 ? `0${minutes}` : minutes;
-
-    const period = hours < 12 ? 'AM' : 'PM';
-
-    const formattedTime = `${hoursString}:${minutesString}:${secondsString} ${period}`;
-
-    setTime(formattedTime);
-  };
+  const [chartData, setChardData] = useState<any>([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      getTime();
-      getInfo();
-      console.log('teste');
+    const interval = setInterval(async () => {
+      const cpuData = await si.cpu();
+      const osData = await si.osInfo();
+      const graphicsData = await si.graphics();
+
+      const datInfo = {
+        cpu: cpuData,
+        os: osData,
+        graphics: graphicsData,
+      };
+
+      setInfo(datInfo);
+
+      const newData = {
+        name: '',
+        cpuSpeed: cpuData.speed,
+        gpuTemp: graphicsData.controllers[0].temperatureGpu,
+        gpuFree: (graphicsData.controllers[0].memoryFree / 1024).toFixed(4),
+        gpuUsed: (graphicsData.controllers[0].memoryUsed / 1024).toFixed(4),
+      };
+
+      const updatedData = [
+        ...chartData.map((i: any) => ({
+          ...i,
+          name: '',
+        })),
+        newData,
+      ];
+
+      // only keep the last 5 data points
+      updatedData.splice(0, updatedData.length - 5);
+
+      // the last data point is the current time
+      updatedData[
+        updatedData.length - 1
+      ].name = new Date().toLocaleTimeString();
+
+      setChardData(updatedData);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [chartData]);
 
   return (
     <Container>
@@ -189,6 +215,65 @@ const System = () => {
                     Fornecedor: {info?.graphics?.controllers[0]?.vendor}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="com__content__right__card">
+              <div
+                style={{
+                  fontSize: 16,
+                }}
+                className="com__content__right__card__header"
+              >
+                Monitor
+              </div>
+              <div className="com__content__right__card__content">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={chartData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="cpuSpeed"
+                    name="Velocidade CPU (GHz)"
+                    stroke="#8884d8"
+                    activeDot={{ r: 8 }}
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="gpuTemp"
+                    name="Temperatura GPU (°C)"
+                    stroke="#82ca9d"
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="gpuFree"
+                    name="Memória livre GPU (GB)"
+                    stroke="#1A237E"
+                  />
+
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="gpuUsed"
+                    name="Memória usada GPU (GB)"
+                    stroke="#AD1457"
+                  />
+                </LineChart>
               </div>
             </div>
           </div>
